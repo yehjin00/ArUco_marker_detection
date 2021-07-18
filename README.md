@@ -6,13 +6,13 @@
 
 - ROS
 - Aruco Marker
-You can print marker from this site.
-https://chev.me/arucogen/
+ You can print marker from this site.
+ https://chev.me/arucogen/
 
 ## Package Description
 - aruco
  : for camera calibration and marker detection without ros
- test.py : code for marker detection without ros
+   test.py : code for marker detection without ros
  ```
  how to run test.py
  $ cd catkin_ws/src/aruco/src/
