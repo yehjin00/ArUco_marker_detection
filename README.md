@@ -52,6 +52,8 @@ Move the packages in ArUco-marker-detection to $~/catkin_ws/src/
 2. You only need to chmod +x the python file you want to use.
 If you're going to calibrate, you need two files(image_capture.py, camera_calibration.py)
 otherwise you only need one file(marker_detection.py).
+Just delete the files you don't need.
+After step 2, $ source ~/catkin_ws/devel/setup.bash
 
 3. Run marker Detection
  Run in each different terminal
