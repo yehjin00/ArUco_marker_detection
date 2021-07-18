@@ -22,12 +22,12 @@
 
  * 'image_web' in aruco package : package for camera calibration
  ```
- how to run image_capture.py
+ * how to run image_capture.py
  $ cd catkin_ws/src/aruco/src/image_web/
  $ python image_capture.py
  image capture using space key
 
- how to run camera_calibration.py
+ * how to run camera_calibration.py
  $ cd catkin_ws/src/aruco/src/image_web/
  $ python cameracalibration.py --image_dir ~/catkin_ws/src/aruco/src/image_web --image_format png --prefix opencv_frame --square_size 25 --width 8 --height 6 --save_file ~/test/image_web/ost1.yaml
 ```
@@ -39,18 +39,19 @@
 
 ## How to build ArUco-marker-detection ROS package
 ```
-Clone this project to your catkin's workspace src folder
+1. Clone this project to your catkin's workspace src folder
  $ cd catkin_ws
  $ cd src
  $ git clone https://github.com/yehjin00/ArUco-marker-detection.git
  $ catkin_make
 Move the packages in ArUco-marker-detection to $~/catkin_ws/src/
 
-You only need to chmod +x the python file you want to use.
+2. You only need to chmod +x the python file you want to use.
 If you're going to calibrate, you need two files(image_capture.py, camera_calibration.py)
 otherwise you only need one file(marker_detection.py).
 
-Run marker Detection(in each different terminal)
+3. Run marker Detection
+ Run in each different terminal
  $ roscore
  $ roslaunch cvbridge_tutorials aruco.launch
 ```
