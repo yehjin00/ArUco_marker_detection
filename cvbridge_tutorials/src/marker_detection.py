@@ -66,7 +66,7 @@ class image_converter:
             cv2.arrowedLine(cv_image, (150, 240), (50, 240), (138,43,226), 3)
           if (ct[0]>0 and ct[0]<0.02):
             print('-------------------------------------------------------')
-          if (ct[0]<-0.02 and ct[0]>0.02 and invRvec[0][0]<3.2 and invRvec[0][0]>3 and invRvec[1][0]<0.01 and invRvec[1][0]>-0.01):
+          if (ct[0]>-0.02 and ct[0]<0.02 and invRvec[0][0]<3.2 and invRvec[0][0]>3 and invRvec[1][0]<0.01 and invRvec[1][0]>-0.01):
             str='Front'
             cv2.putText(cv_image,str,(280,100),cv2.FONT_HERSHEY_PLAIN,3,(138,43,226),3)  # image, text, position, font, size, color, thickness
           str='o'  # display camera's center
