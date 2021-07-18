@@ -46,7 +46,7 @@ Clone this project to your catkin's workspace src folder
  $ catkin_make
 Move the packages in ArUco-marker-detection to $~/catkin_ws/src/
 
-You only need to chmod the python file you want to use.
+You only need to chmod +x the python file you want to use.
 If you're going to calibrate, you need two files(image_capture.py, camera_calibration.py)
 otherwise you only need one file(marker_detection.py).
 
