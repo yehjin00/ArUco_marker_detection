@@ -2,12 +2,14 @@
 
 ![](https://docs.opencv.org/3.4/markers.jpg)
 
+
 ## Prerequisites
 
 - ROS
 - Aruco Marker
  (You can print marker from this site.
  https://chev.me/arucogen/)
+
 
 ## Package Description
 - aruco
@@ -22,12 +24,12 @@
 
  * 'image_web' in aruco package : package for camera calibration
  ```
- * how to run image_capture.py
+ how to run image_capture.py
  $ cd catkin_ws/src/aruco/src/image_web/
  $ python image_capture.py
  image capture using space key
 
- * how to run camera_calibration.py
+ how to run camera_calibration.py
  $ cd catkin_ws/src/aruco/src/image_web/
  $ python cameracalibration.py --image_dir ~/catkin_ws/src/aruco/src/image_web --image_format png --prefix opencv_frame --square_size 25 --width 8 --height 6 --save_file ~/test/image_web/ost1.yaml
 ```
@@ -36,6 +38,7 @@
   : cvbridge example code and marker_detection code with ros
   ** caution! After doing camera calibration, do marker detection
   marker_detection.py : marker detection code with ros.
+
 
 ## How to build ArUco-marker-detection ROS package
 ```
