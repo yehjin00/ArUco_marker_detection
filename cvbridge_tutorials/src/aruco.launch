@@ -1,4 +1,0 @@
-<launch>
-  <node name="usb_cam" pkg="usb_cam"  type="usb_cam_node" respawn="true" />
-  <node name="image_converter" pkg="cvbridge_tutorials" type="marker_detection.py" output="screen" />
-</launch>
