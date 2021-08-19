@@ -57,8 +57,8 @@ class image_converter:
           print('tt :',tt)  
           ct=np.array([tt[0][3],tt[1][3],tt[2][3]])  # camera pose
           print('ct : ',ct)
-          invRvec, _ = cv2.Rodrigues(R)
-          aruco.drawDetectedMarkers(cv_image.copy(), corners, ids)  # Draw A square around the markers
+          invRvec, _ = cv2.Rodrigues(R) # rotation's transposition = rotation's inverse
+          aruco.drawDetectedMarkers(cv_image.copy(), corners, ids)  # Draw a square around the markers
           aruco.drawAxis(cv_image, matrix_coefficients, distortion_coefficients, rvec, tvec, 0.05)  # Draw Axis, axis length 0.05m
           if (ct[0]<-0.02):  # Let know direction
             cv2.arrowedLine(cv_image, (490, 240), (590, 240), (138,43,226), 3)  # image, start point, final point, color, size
@@ -78,10 +78,10 @@ class image_converter:
       print(e)
     
     cv2.imshow("Image window", cv_image)
-    cv2.waitKey(3)
+    cv2.waitKey(3)  # imshow & waitKey is essential. if waitKey doesn't exist, imshow turns off immediately
 
     try:
-      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8")) # After working with opencv image, convert to ros image again and publish.
     except CvBridgeError as e:
       print(e)
 
@@ -125,14 +125,14 @@ def draw_data(original_img,curv,center_dist1,center_dist2):  # draw real-time po
 
 if __name__ == '__main__':
   # yaml file load(matrix_coefficients, distortion_coefficients)
-  with open('/home/sparo1/catkin_ws/src/aruco/src/image_web/ost1.yaml') as f:
+  with open('/home/yehjin/catkin_ws/src/aruco/src/image_web/ost1.yaml') as f:
     data=f.read()  # read loaded file
     vegetables = yaml.load(data,Loader=yaml.FullLoader)
     k=vegetables['K']
     d=vegetables['D']
-    kd=k['kdata']
-    kd=np.reshape(kd,(3,3))
-    dd=d['ddata']
+    kd=k['kdata'] # kd is 3x3 matrix in yaml file
+    kd=np.reshape(kd,(3,3))  # so reshape
+    dd=d['ddata'] # dd is 1x5 matrix in yaml file, so not reshape
     matrix_coefficients=np.array(kd)
     distortion_coefficients=np.array(dd)
   f.close()
