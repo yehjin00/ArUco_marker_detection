@@ -1,4 +1,8 @@
 <launch>
-  <node name="usb_cam" pkg="usb_cam"  type="usb_cam_node" respawn="true" />
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
   <node name="image_converter" pkg="cvbridge_tutorials" type="marker_detection.py" output="screen" />
+  <node name="cmd_pose" pkg="cvbridge_tutorials" type="teleop.py" output="screen" />
+  <include file="$(find omo_r1_bringup)/launch/omo_r1_motor.launch">
+    <arg name="set_odom_mode" value="wheel_only"/>
+  </include>
 </launch>
