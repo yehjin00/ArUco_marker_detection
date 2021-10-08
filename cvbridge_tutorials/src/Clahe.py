@@ -26,7 +26,6 @@ class image_converter:
  
   def callback(self,data):
     try:
-      print("4")
       cv_image = self.bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
 
       # OpenCV's CLAHE (Contrast Limited Adaptive Histogram Equalization)
