@@ -22,14 +22,19 @@ class cmd_pose:
         # linear = 0.05*math.sqrt(pose.position.x ** 2 + pose.position.y ** 2)
         print('angular : ',angular)
         print('linear : ',linear)
+        #print('x orientation : ',pose.orientation.x)
+        #print('y orientation : ',pose.orientation.y)
+        #print('z orientation : ',pose.orientation.z)
+
+        # # speed control
         if linear<0.1:
-           linear=0.0
+            linear=0.0
         elif linear>0.18:
             linear=linear*1.5
-        if angular<-0.2:
-            angular=angular*1.2
-        elif angular>0.2:
-            angular=angular*1.2
+        if angular<-0.0:
+            angular=angular*1.5
+        elif angular>0.0:
+            angular=angular*1.5
 
         # velocity
         cmd = Twist()

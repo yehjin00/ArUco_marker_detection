@@ -21,24 +21,29 @@ class image_converter:
   def __init__(self):
     self.pose_pub = rospy.Publisher("pose",Pose,queue_size = 1)  # publisher's topic name can be anything
     self.image_pub = rospy.Publisher("image", Image, queue_size=1)
-    print("1")
     self.bridge = CvBridge()
-    print("2")
     self.image_sub = rospy.Subscriber("/camera/color/image_raw",Image,self.callback,queue_size = 1)  # '/usb_cam/image_raw' is usb_cam's topic name
  
   def callback(self,data):
     try:
       cv_image = self.bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
+      cv_image1 = cv2.resize(cv_image,dsize=(10,10),interpolation=cv2.INTER_AREA)
+      # cv_image=cv2.medianBlur(cv_image,31) # odd,up 1
+      #print('cv_image : ',cv_image)
       gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)  # Change grayscale
+
+      gray1 = cv2.cvtColor(cv_image1, cv2.COLOR_BGR2GRAY)
+      pixelsum=cv2.sumElems(gray1)
+      print('sum : ',pixelsum)
       aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_250)  # Use 5x5 dictionary to find markers  (5x5: number of rectangles inside the marker  250: id range 0~249 )
       parameters = aruco.DetectorParameters_create()  # Marker detection parameters
       corners, ids, rejected_img_points = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
       p = Pose()
-      if np.all(ids is None):  # If there are markers not found by detector
-        print('Marker undetected')
+      #if np.all(ids is None):  # If there are markers not found by detector
+        #print('Marker undetected')
       if np.all(ids is not None):   # If there are markers found by detector
-        print('Marker detected')
-        print(ids)      # print marker ID
+        #print('Marker detected')
+        print('marker id : ',ids)      # print marker ID
         for i in range(0, len(ids)): # Iterate in markers
           rvec, tvec,markerPoints= aruco.estimatePoseSingleMarkers(corners[i], 0.1, matrix_coefficients, distortion_coefficients)  # markerLength width 0.1m
           (rvec - tvec).any()  # get rid of that nasty numpy value array error
@@ -57,14 +62,15 @@ class image_converter:
           a3=np.append(r3,t3)
           a4=np.array([0,0,0,1])
           t=np.r_[[a1],[a2],[a3],[a4]]  # make 4x4 Homogeneous transformation matrix (rot + transl)
-          print('t : ',t)  
+          #print('t : ',t)  
           tt=np.linalg.inv(t)  # inverse
-          print('tt :',tt)  
+          #print('tt :',tt)  
           ct=np.array([tt[0][3],tt[1][3],tt[2][3]])  # camera pose
-          print('ct : ',ct)
+          #print('ct : ',ct)
           invRvec, _ = cv2.Rodrigues(R) # rotation's transposition = rotation's inverse
           aruco.drawDetectedMarkers(cv_image.copy(), corners, ids)  # Draw a square around the markers
           aruco.drawAxis(cv_image, matrix_coefficients, distortion_coefficients, rvec, tvec, 0.05)  # Draw Axis, axis length 0.05m
+          
           # if (ct[0]<-0.02):  # Let know direction
           #   cv2.arrowedLine(cv_image, (490, 240), (590, 240), (138,43,226), 3)  # image, start point, final point, color, size
           # elif (ct[0]>0.02):
@@ -170,7 +176,7 @@ def draw_data(original_img,curv,center_dist1,center_dist2):  # draw real-time po
 
 if __name__ == '__main__':
   # yaml file load(matrix_coefficients, distortion_coefficients)
-  with open('/home/sparo/ros/catkin_ws_aruco/src/aruco/src/image_web/ost1.yaml') as f:
+  with open('/home/sparo/ros/catkin_ws_aruco/src/aruco/src/image_web/ost.yaml') as f: # ost.yaml : calibration again
     data=f.read()  # read loaded file
     vegetables = yaml.load(data,Loader=yaml.FullLoader)
     k=vegetables['K']
